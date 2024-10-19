@@ -8,7 +8,7 @@ import './index.css'
 
 const root_router = createBrowserRouter([{
   path: "/",
-  element: <App />
+  element: <Dashboard />
 },
 {
   path: "/dashboard",
