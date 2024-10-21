@@ -1,0 +1,27 @@
+
+model User {
+    id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    firstname String
+    lastname String
+    email String @unique
+    createdAt DateTime @default(now())
+    tier UserTier @default(FREE)
+    team Team[]
+    director_id String @db.Uuid
+    director User? @relation("DirectorWorkers",fields: [director_id], references: [id])
+    workers User[] @relation("DirectorWorkers")
+
+    @@unique([firstname, lastname])
+    @@index([email])
+}
+
+model Team {
+    id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    owner User @relation(fields: [userId], references: [id])
+    userId String @db.Uuid
+}
+
+enum UserTier {
+    FREE
+    SUBSCRIBED
+}
